@@ -12,9 +12,9 @@ router.post('/login', isNotLoggedIn, login);
 
 router.get('/logout', isLoggedIn, logout);
 
-router.get('./kakao', passport.authenticate('kakao'));
+router.get('/kakao', passport.authenticate('kakao'));
 
-router.get('./kakao/callback', passport.authenticate('kakao', {
+router.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirext: '/?error=카카오로그인 실패',
 }), (req, res) => {
     res.redirect('/');
