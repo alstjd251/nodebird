@@ -1,6 +1,6 @@
 const { Post, Hashtag } = require('../models');
 
-exports.afterUploadImage = (res, req) => {
+exports.afterUploadImage = (req, res) => {
     console.log(req.file);
     res.json({ url: `/img/${req.file.filename}` });
 };

@@ -10,7 +10,7 @@ class User extends Sequelize.Model {
             },
             nick: {
                 type: Sequelize.STRING(15),
-                allowNull: true,
+                allowNull: false,
             },
             password: {
                 type: Sequelize.STRING(100),
@@ -45,11 +45,11 @@ class User extends Sequelize.Model {
             through: 'Follow',
         });
         db.User.belongsToMany(db.User, {
-            foreignKey: 'followingId',
+            foreignKey: 'followerId',
             as: 'Followings',
             through: 'Follow',
-        })
-    };
+        });
+    }
 };
 
 module.exports = User;

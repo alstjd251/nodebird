@@ -25,7 +25,7 @@ exports.renderMain = async (req, res, next) => {
         console.error(err);
         next(err);
     }
-};
+}
 
 exports.renderHashtag = async (req, res, next) => {
     const query = req.query.hashtag;
@@ -42,7 +42,7 @@ exports.renderHashtag = async (req, res, next) => {
         return res.render('main', {
             title: `${query} | NodeBird`,
             twits: posts,
-        })
+        });
     } catch (error) {
         console.error(error);
         return next(error);
