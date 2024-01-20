@@ -4,9 +4,23 @@
   <div class="timeline">
     <div class="followings half">
       <h2>팔로잉 목록</h2>
+      <!-- {% if user.Followings %}
+        {% for following in user.Followings %}
+          <div style="display: flex;">
+            <input type="hidden" value="{{following.nick}}" class="follow-user-id">
+            {{following.nick}}
+            <button class="twit-unfollow" style="margin-left: 10px;">팔로우취소</button>
+            <span>팔로우취소 : {{followings.User.id}}</span>
+          </div>
+        {% endfor %}
+      {% endif %} -->
       {% if user.Followings %}
         {% for following in user.Followings %}
-          <div>{{following.nick}}</div>
+          <div style="display: flex;">
+            <input type="hidden" value="{{following.id}}" class="follow-user-id">
+            {{following.nick}}
+            <button class="twit-unfollow" style="margin-left: 10px;">팔로우취소</button>
+          </div>
         {% endfor %}
       {% endif %}
     </div>
@@ -19,4 +33,28 @@
       {% endif %}
     </div>
   </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.querySelectorAll('.twit-unfollow').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      const myId = document.querySelector('#my-id');
+      if (myId) {
+        const userId = tag.parentNode.querySelector('.follow-user-id').value;
+        if (userId !== myId.value) {
+          if (confirm('팔로우를 취소하시겠습니까??')) {
+            axios.post(`/user/${userId}/unfollow`)
+              .then(() => {
+                location.reload();
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+          }
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}

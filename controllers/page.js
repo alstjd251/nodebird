@@ -1,7 +1,23 @@
 const { User, Post, Hashtag } = require('../models');
 
-exports.renderProfile = (req, res) => {
-    res.render('profile', { title: '내 정보 - NodeBird' });
+exports.renderProfile = async (req, res) => {
+    try {
+        const posts = await Post.findAll({
+            include: {
+                model: User,
+                attributes: ['id', 'nick'],
+            },
+            order: [['createdAt', 'DESC']],
+        });
+        res.render('profile', {
+            title: '내 정보 - NodeBird',
+            followings: posts,
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+    
 };
 
 exports.renderJoin = (req, res) => {
